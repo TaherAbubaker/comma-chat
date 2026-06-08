@@ -1,6 +1,7 @@
 import net from "net";
 import readline from "readline";
 
+
 const socket = net.createConnection({
   port: 3000,
 });
@@ -19,5 +20,8 @@ const rl = readline.createInterface({
 });
 
 rl.on("line", (input) => {
+  process.stdout.moveCursor(0, -1);
+  process.stdout.clearLine(0);
+
   socket.write(input);
 });
