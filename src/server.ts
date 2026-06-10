@@ -1,6 +1,7 @@
 import net from "net";
 import readline from "readline";
 import { Client } from "./types";
+import { handleCommand } from "./commands/handler";
 
 const colors = [
   "\x1b[31m", // red
