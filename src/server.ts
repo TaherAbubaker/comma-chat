@@ -1,19 +1,10 @@
 import net from "net";
 import readline from "readline";
 import { Client } from "./types";
+import { colors, RESET } from "./colors";
 import { handleCommand } from "./commands/handler";
 import { broadcast } from "./brodcast";
 
-const colors = [
-  "\x1b[31m", // red
-  "\x1b[32m", // green
-  "\x1b[33m", // yellow
-  "\x1b[34m", // blue
-  "\x1b[35m", // magenta
-  "\x1b[36m", // cyan
-];
-
-const RESET = "\x1b[0m";
 
 export const clients: Client[] = [];
 
@@ -62,6 +53,7 @@ const server = net.createServer((socket) => {
   });
 
   socket.on("end", () => {
+    client.socket.write("Server closed the connection\n");
     console.log("Client sent FIN (ended connection)");
   });
 
