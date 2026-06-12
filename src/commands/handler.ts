@@ -1,10 +1,11 @@
 // commands/handler.ts
 import { Client } from "../types";
+import {CommandFn} from "../types";
+import { helpCommand } from "./help";
 
-type CommandFn = (client: Client, clients: Client[], args: string[]) => void;
 
 const registry: Record<string, CommandFn> = {
-  // commands go here later
+  help: helpCommand,
 };
 
 export function handleCommand(msg: string, client: Client, clients: Client[]) {
