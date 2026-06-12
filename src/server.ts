@@ -2,6 +2,7 @@ import net from "net";
 import readline from "readline";
 import { Client } from "./types";
 import { handleCommand } from "./commands/handler";
+import { broadcast } from "./brodcast";
 
 const colors = [
   "\x1b[31m", // red
@@ -14,13 +15,9 @@ const colors = [
 
 const RESET = "\x1b[0m";
 
-const clients: Client[] = [];
+export const clients: Client[] = [];
 
-function broadcast(message: string) {
-  for (const c of clients) {
-    c.socket.write(message);
-  }
-}
+
 
 const server = net.createServer((socket) => {
   console.log("A client connected!");
@@ -62,7 +59,6 @@ const server = net.createServer((socket) => {
     const index = clients.indexOf(client);
     if (index !== -1) clients.splice(index, 1);
 
-    broadcast(`❌ ${client.name} left the chat\n`);
   });
 
   socket.on("end", () => {

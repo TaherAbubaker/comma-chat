@@ -10,6 +10,11 @@ socket.on("connect", () => {
   console.log("Connected to server!");
 });
 
+socket.on("close", () => {
+  console.log("Disconnected from server.");
+  process.exit(0);
+});
+
 socket.on("data", (data) => {
   console.log("Server:", data.toString());
 });
