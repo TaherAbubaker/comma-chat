@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+.qodo/
+node_modules
+
+# Local Testing / Scratchpads (Tailored to your workspace)
+nextPushs
+doc sami.txt
+*.log
+
+# Build Output
+dist/
+build/
+out/
+
+# IDE Configurations
+.vscode/
+.idea/
+*.suo
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Future Security (Keep this ready for when you add encryption/auth)
+.env
+.env.local

@@ -3,11 +3,12 @@ import { Client } from "../types";
 import {CommandFn} from "../types";
 import { helpCommand } from "./help";
 import { quitCommand } from "./quit";
-
+import { nickCommand } from "./nick";
 
 const registry: Record<string, CommandFn> = {
   help: helpCommand,
-  quit: quitCommand
+  quit: quitCommand,
+  nick: nickCommand,
 };
 
 export function handleCommand(msg: string, client: Client, clients: Client[]) {
