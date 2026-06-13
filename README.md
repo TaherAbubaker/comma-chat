@@ -1,38 +1,32 @@
-# Comma Chat 💬
+---
 
-A terminal-based real-time communication system built with **Node.js** and **TypeScript**.
+## 🔌 How to Run
 
-This project is being developed as a learning journey to understand networking concepts such as TCP sockets, client-server architecture, and real-time communication.
+**Start the server:**
+```bash
+npm run dev:server
+```
 
-## 🚀 Current Features
+**Connect as a client:**
+```bash
+npm run dev:client
+```
 
-- TCP server using Node.js `net` module
-- Terminal-based client
-- Multiple clients can connect simultaneously
-- Real-time message broadcasting
-- Basic client management
-- Handles client disconnections
-
-## 🛠️ Tech Stack
-
-- Node.js
-- TypeScript
-- TCP Sockets (`net`)
-- Readline
+---
 
 ## 📌 Planned Features
 
-- [ ] Custom usernames
-- [ ] Private messaging
-- [ ] Chat rooms
-- [ ] Online users list
-- [ ] Terminal UI improvements
-- [ ] Authentication
-- [ ] End-to-end encryption
-- [ ] File sharing
+- [ ] Easy join for friends on the same network (dynamic IP/port via CLI args)
+- [ ] `/ascii` command for sending ASCII art in chat
+- [ ] Chat rooms (`/join <room>`)
+- [ ] TLS encryption (ISP can't read messages)
+- [ ] Local AI chatbot via Ollama (`/ai <prompt>`)
+- [ ] Authentication (`/login`, `/register`)
 - [ ] Persistent message history
-- [ ] Desktop or web client
+- [ ] File sharing
+
+---
 
 ## 🎯 Purpose
 
-The main goal of this project is educational: to build a real-world networking application from scratch while learning how communication systems work under the hood.
+The main goal of this project is educational: to build a real-world networking application from scratch while learning how TCP, sockets, and communication protocols actually work under the hood. Comma is growing into a lightweight command platform — chat is just the first layer.
