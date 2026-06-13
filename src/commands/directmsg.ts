@@ -1,6 +1,7 @@
 import { CommandFn } from "../types";
 import { Client } from "../types";
 import { colors, RESET } from "../colors";
+//${client.color}${client.name}${RESET}
 
 export const directMsgCommand: CommandFn = (client, clients, args) => {
   if (args.length < 2) {
@@ -16,7 +17,7 @@ export const directMsgCommand: CommandFn = (client, clients, args) => {
       return;
     }
 
-    target.socket.write(`[DM from ${client.name}]: ${message}\n`);
-    client.socket.write(`[DM to ${targetName}]: ${message}\n`);
+    target.socket.write(`[DM from ${client.color}${client.name}${RESET}]: ${message}\n`);
+    client.socket.write(`[DM to ${target.color}${target.name}${RESET}]: ${message}\n`);
   
 };

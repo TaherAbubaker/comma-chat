@@ -22,8 +22,16 @@ const server = net.createServer((socket) => {
 
   clients.push(client);
 
-  socket.write("Welcome to Comma Chat!\n");
-  socket.write("Type your name below:\n");
+  socket.write(`
+ ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ 
+██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗
+██║     ██║   ██║██╔████╔██║██╔████╔██║███████║
+██║     ██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║
+╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║
+ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
+        terminal chat — type /help to get help
+    `);
+  socket.write("\nType your name below:\n");
 
   socket.on("data", (data) => {
     const msg = data.toString().trim();
@@ -32,10 +40,10 @@ const server = net.createServer((socket) => {
       client.name = msg;
       client.gotaname = true;
 
-      socket.write(`Welcome, ${client.name}!\n`);
+      socket.write(`Welcome, ${client.color}${client.name}${RESET}!\n`);
       socket.write("Type your messages below:\n");
 
-      broadcast(`🟩 ${client.name} joined the chat\n`);
+      broadcast(`🟩 ${client.color}${client.name}${RESET} joined the chat\n`);
 
     } else if (msg.startsWith("/")) {
     handleCommand(msg, client, clients);

@@ -15,8 +15,11 @@ socket.on("close", () => {
   process.exit(0);
 });
 
+let time = new Date().toLocaleTimeString();
+
 socket.on("data", (data) => {
-  console.log("Server:", data.toString());
+  //console.log("Server:", data.toString());
+  console.log(`[${time}] ${data.toString()}`);
 });
 
 const rl = readline.createInterface({
