@@ -5,11 +5,13 @@ import { helpCommand } from "./help";
 import { quitCommand } from "./quit";
 import { nickCommand } from "./nick";
 import { onlineCommand } from "./online";
+import { directMsgCommand } from "./directmsg";
 
 const registry: Record<string, CommandFn> = {
   help: helpCommand,
   quit: quitCommand,
   nick: nickCommand,
+  msg: directMsgCommand,
   online: onlineCommand,
 };
 

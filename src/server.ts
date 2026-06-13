@@ -54,7 +54,7 @@ const server = net.createServer((socket) => {
 
   socket.on("end", () => {
     client.socket.write("Server closed the connection\n");
-    console.log("Client sent FIN (ended connection)");
+    console.log("Server closed the connection\n Client sent FIN (ended connection)");
   });
 
   socket.on("error", () => {
