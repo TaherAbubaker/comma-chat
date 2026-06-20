@@ -12,6 +12,7 @@ export const helpCommand: CommandFn = (client, clients, args) => {
      │  /nick     → change username    │
      │  /msg      → private message    │
      │  /quit     → disconnect         │
+     │  /ascii    → show ascii art     │
      └─────────────────────────────────┘
   `
 );

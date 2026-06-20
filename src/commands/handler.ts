@@ -6,6 +6,10 @@ import { quitCommand } from "./quit";
 import { nickCommand } from "./nick";
 import { onlineCommand } from "./online";
 import { directMsgCommand } from "./directmsg";
+import { asciiCommand } from "./ascii"; 
+import { asciiArt } from "../asciiArt";
+import { RESET } from "../colors";
+
 
 const registry: Record<string, CommandFn> = {
   help: helpCommand,
@@ -13,6 +17,7 @@ const registry: Record<string, CommandFn> = {
   nick: nickCommand,
   msg: directMsgCommand,
   online: onlineCommand,
+  ascii: asciiCommand,
 };
 
 export function handleCommand(msg: string, client: Client, clients: Client[]) {
@@ -22,10 +27,17 @@ export function handleCommand(msg: string, client: Client, clients: Client[]) {
 
   const command = registry[commandName];
 
-  if (!command) {
-    client.socket.write(`Unknown command: /${commandName}\n`);
+  if (command) {
+    command(client, clients, args);
     return;
   }
 
-  command(client, clients, args);
+  const art = asciiArt[commandName];
+
+  if (art) {
+    client.socket.write(`${client.color}${client.name}${RESET} sent:\n ${art}\n`);
+    return;
+  }
+
+  client.socket.write(`Unknown command: /${commandName}\n`);
 }
