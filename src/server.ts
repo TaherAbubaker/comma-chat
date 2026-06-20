@@ -66,10 +66,11 @@ const server = net.createServer((socket) => {
   });
 
   socket.on("error", () => {
-    console.log("Trying to handle client error");
+    console.log("Trying to handle client error like a good boy!");
   });
 });
 
 server.listen(3000, () => {
   console.log("Server running on port 3000");
 });
+
