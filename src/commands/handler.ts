@@ -9,6 +9,7 @@ import { directMsgCommand } from "./directmsg";
 import { asciiCommand } from "./ascii"; 
 import { asciiArt } from "../asciiArt";
 import { RESET } from "../colors";
+import { broadcast } from "../brodcast";
 
 
 const registry: Record<string, CommandFn> = {
@@ -35,7 +36,7 @@ export function handleCommand(msg: string, client: Client, clients: Client[]) {
   const art = asciiArt[commandName];
 
   if (art) {
-    client.socket.write(`${client.color}${client.name}${RESET} sent:\n ${art}\n`);
+    broadcast(`${client.color}${client.name}${RESET} sent:\n ${art}\n`);
     return;
   }
 
