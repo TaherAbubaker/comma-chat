@@ -10,6 +10,7 @@ import { asciiCommand } from "./ascii";
 import { asciiArt } from "../asciiArt";
 import { RESET } from "../colors";
 import { broadcast } from "../brodcast";
+import { cameraCommand } from "./camera";
 
 
 const registry: Record<string, CommandFn> = {
@@ -19,6 +20,7 @@ const registry: Record<string, CommandFn> = {
   msg: directMsgCommand,
   online: onlineCommand,
   ascii: asciiCommand,
+  camera: cameraCommand,
 };
 
 export function handleCommand(msg: string, client: Client, clients: Client[]) {

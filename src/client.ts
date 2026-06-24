@@ -1,10 +1,11 @@
 import net from "net";
 import readline from "readline";
 
+const host = process.argv[2] || "localhost";
+const port = parseInt(process.argv[3] || "3000");
 
-const socket = net.createConnection({
-  port: 3000,
-});
+const socket = net.createConnection({ host, port });
+
 
 socket.on("connect", () => {
   console.log("Connected to server!");

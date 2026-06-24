@@ -13,6 +13,7 @@ export const helpCommand: CommandFn = (client, clients, args) => {
      │  /msg      → private message    │
      │  /quit     → disconnect         │
      │  /ascii    → show ascii art     │
+     │  /camera   → open camera feed   │
      └─────────────────────────────────┘
   `
 );
