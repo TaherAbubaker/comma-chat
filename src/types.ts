@@ -6,6 +6,8 @@ export type Client = {
   name: string;
   gotaname: boolean;
   color: string;
+  authenticated: boolean;
+  ATTEMPTS: number;
 };
 
 export type CommandFn = 

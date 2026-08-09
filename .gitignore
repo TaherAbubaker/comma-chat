@@ -8,6 +8,7 @@ nextPushs
 doc sami.txt
 *.log
 .gitignore
+.env
 
 # Build Output
 dist/

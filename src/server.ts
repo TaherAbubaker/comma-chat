@@ -4,8 +4,10 @@ import { Client } from "./types";
 import { colors, RESET } from "./colors";
 import { handleCommand } from "./commands/handler";
 import { broadcast } from "./brodcast";
+import dotenv from "dotenv";
 
 export const clients: Client[] = [];
+dotenv.config();
 
 const server = net.createServer((socket) => {
   console.log("A client connected!");
@@ -15,6 +17,8 @@ const server = net.createServer((socket) => {
     name: `User${clients.length + 1}`,
     gotaname: false,
     color: colors[Math.floor(Math.random() * colors.length)],
+    authenticated: false,
+    ATTEMPTS: 0,
   };
 
   clients.push(client);
@@ -27,29 +31,50 @@ const server = net.createServer((socket) => {
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
         terminal chat — type /help to get help
-    `);
-  socket.write("\nType your name below:\n");
+`);
+  socket.write("Enter room password:\n");
 
   socket.on("data", (data) => {
-    const msg = data.toString().trim();
+  const msg = data.toString().trim();
 
-    if (client.gotaname === false) {
-      if (msg.startsWith("/")) {
-        socket.write("Please enter a name first, not a command.\n");
-        return;
-      }
-      client.name = msg;
-      client.gotaname = true;
-      socket.write(`Welcome, ${client.color}${client.name}${RESET}!\n`);
-      socket.write("Type your messages below:\n");
-      broadcast(`🟩 ${client.color}${client.name}${RESET} joined the chat\n`);
-    } 
-    else if (msg.startsWith("/")) {
-      handleCommand(msg, client, clients);
+  // step 1 — authentication
+  if (!client.authenticated) {
+    if (msg === process.env.ROOM_PASSWORD) {
+      client.authenticated = true;
+      socket.write("✅ Password correct!\n");
+      socket.write("Enter your name:\n");
     } else {
-      broadcast(`${client.color}${client.name}${RESET}: ${msg}\n`);
+      client.ATTEMPTS++;
+      if (client.ATTEMPTS === 3) {
+        console.log("🚫 Client got kicked out...");
+        socket.destroy();
+      }
+      socket.write("❌ Wrong password. Try again:\n attempts left " + (3 - client.ATTEMPTS) + "\n");
     }
-  });
+    return;
+  }
+
+  // step 2 — name
+  if (!client.gotaname) {
+    if (msg.startsWith("/")) {
+      socket.write("Please enter a name first, not a command.\n");
+      return;
+    }
+    client.name = msg;
+    client.gotaname = true;
+    socket.write(`Welcome, ${client.color}${client.name}${RESET}!\n`);
+    socket.write("Type your messages below:\n");
+    broadcast(`🟩 ${client.color}${client.name}${RESET} joined the chat\n`);
+    return;
+  }
+
+  // step 3 — commands and chat
+  if (msg.startsWith("/")) {
+    handleCommand(msg, client, clients);
+  } else {
+    broadcast(`${client.color}${client.name}${RESET}: ${msg}\n`);
+  }
+});
 
   socket.on("close", () => {
     console.log("A client disconnected");
@@ -70,7 +95,7 @@ const server = net.createServer((socket) => {
   });
 });
 
-server.listen(3000,  () => {
+server.listen(3000, () => {
   console.log(`
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ 
 ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗
@@ -82,5 +107,3 @@ server.listen(3000,  () => {
   console.log("✅ Server running on port 3000");
   console.log("⏳ Waiting for connections...\n");
 });
-
-
