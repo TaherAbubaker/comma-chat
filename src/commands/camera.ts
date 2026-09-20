@@ -13,9 +13,13 @@ export const cameraCommand: CommandFn = (client, clients, args) => {
   client.socket.write("📷 Opening camera on host machine (press Q in the window to close)...\n");
 
   const scriptPath = path.join(__dirname, "../camera.py");
-  const proc = spawn("python", [scriptPath]);
+  const proc = spawn("python", [scriptPath, client.name]); // pass the username
 
   cameraRunning = true;
+
+  proc.stderr.on("data", (data) => {
+    console.log("Camera error:", data.toString());
+  });
 
   proc.on("error", (err) => {
     client.socket.write(`❌ Failed to open camera: ${err.message}\n`);
@@ -24,6 +28,6 @@ export const cameraCommand: CommandFn = (client, clients, args) => {
 
   proc.on("close", (code) => {
     cameraRunning = false;
-    client.socket.write("📷 Camera closed.\n");
+    client.socket.write(`📷 Camera closed.\n`);
   });
 };
