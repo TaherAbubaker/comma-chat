@@ -1,9 +1,7 @@
-import { Client } from "../types";
 import { CommandFn } from "../types";
 
 export const helpCommand: CommandFn = (client, clients, args) => {
-  client.socket.write(
-  `
+  client.socket.write(`
      ┌─────────────────────────────────┐
      │         COMMA — COMMANDS        │
      ├─────────────────────────────────┤
@@ -11,11 +9,10 @@ export const helpCommand: CommandFn = (client, clients, args) => {
      │  /online   → who's connected    │
      │  /nick     → change username    │
      │  /msg      → private message    │
-     │  /quit     → disconnect         │
      │  /ascii    → show ascii art     │
      │  /camera   → open camera feed   │
+     │  /ai       → talk to Comma AI   │
+     │  /quit     → disconnect         │
      └─────────────────────────────────┘
-  `
-);
-  //then list the services like opening the camera and opening the airconditioner
+`);
 };

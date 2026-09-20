@@ -1,5 +1,9 @@
-// types.ts
 import net from "net";
+
+export type AiMessage = {
+  role: "user" | "assistant" | "system";
+  content: string;
+};
 
 export type Client = {
   socket: net.Socket;
@@ -7,12 +11,13 @@ export type Client = {
   gotaname: boolean;
   color: string;
   authenticated: boolean;
-  ATTEMPTS: number;
+  attempts: number;
+  inAiMode: boolean;
+  aiHistory: AiMessage[];
 };
 
-export type CommandFn = 
-(
-    client: Client, 
-    clients: Client[], 
-    args: string[]
+export type CommandFn = (
+  client: Client,
+  clients: Client[],
+  args: string[]
 ) => void;

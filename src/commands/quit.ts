@@ -1,10 +1,8 @@
 import { Client } from "../types";
 import { CommandFn } from "../types";
-import { broadcast } from "../brodcast";
-import { colors , RESET } from "../colors";
 
 export const quitCommand: CommandFn = (client, clients, args) => {
-    client.socket.write(`\n
+  client.socket.write(`
  ██████╗  ██████╗  ██████╗ ██████╗ ██████╗ ██╗   ██╗███████╗
 ██╔════╝ ██╔═══██╗██╔═══██╗██╔══██╗██╔══██╗╚██╗ ██╔╝██╔════╝
 ██║  ███╗██║   ██║██║   ██║██║  ██║██████╔╝ ╚████╔╝ █████╗  
@@ -12,14 +10,10 @@ export const quitCommand: CommandFn = (client, clients, args) => {
 ╚██████╔╝╚██████╔╝╚██████╔╝██████╔╝██████╔╝   ██║   ███████╗
  ╚═════╝  ╚═════╝  ╚═════╝ ╚═════╝ ╚═════╝    ╚═╝   ╚══════╝
        — connection closed cleanly — see you next time —
-\n`);
+`);
 
-    setTimeout(()=>{
-        client.socket.destroy();
-    } , 2000);
-
-    const index = clients.indexOf(client);
-    if (index !== -1) clients.splice(index, 1);
-
-    broadcast(`🟥 ${client.color}${client.name}${RESET} left the chat\n`);
+  setTimeout(() => {
+    client.socket.destroy(); // triggers the 'close' handler in server.ts
+    // which now handles removal + broadcast — no duplication here
+  }, 1500);
 };
